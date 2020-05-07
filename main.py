@@ -1,8 +1,10 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
+from kivy.uix.popup import Popup
 import time
 
 import lab3_1
@@ -15,7 +17,21 @@ class MainApp(App):
     def on_press_button1(self):
         try:
             n = int(App.get_running_app().ti1.text)
-            App.get_running_app().lb1.text = lab3_1.calc1(n)
+            result=lab3_1.calc1(n)
+            App.get_running_app().lb1.text = result[0]
+            layout = GridLayout(cols=1, padding=10)
+
+            popupLabel = Label(text=str(result[1]))
+            closeButton = Button(text="Close")
+
+            layout.add_widget(popupLabel)
+            layout.add_widget(closeButton)
+            popup = Popup(title='Time',
+                          content=layout,
+                          size_hint=(None, None), size=(200, 200))
+            popup.open()
+            closeButton.bind(on_press=popup.dismiss)
+
         except:
             App.get_running_app().lb1.text = 'Некоректний ввід'
             return None
@@ -38,7 +54,7 @@ class MainApp(App):
             kofstr = str(App.get_running_app().ti5.text)
             kof = kofstr.split(',')
             y = int(App.get_running_app().ti6.text)
-            t = lab3_3.calc3(int(kof[0]), int(kof[1]), int(kof[2]), int(kof[3]), y)
+            t = lab3_3.calc3(int(kof[0]), int(kof[1]), int(kof[2]), int(kof[3]), y, int(kof[4]))
             App.get_running_app().lb3.text = str(t)
         except:
             App.get_running_app().lb3.text = 'Некоректний ввід'
@@ -61,7 +77,7 @@ class MainApp(App):
     bt2.bind(on_press=on_press_button2)
     # Lab 3.2
     lb3 = Label(text="Hello! Its Lab#3.3. Results will be here.")
-    ti5 = TextInput(text="Input here a,b,c,d")
+    ti5 = TextInput(text="Input here a,b,c,d and mutation rate")
     ti6 = TextInput(text="Input here y")
     bt3 = Button(text="Calculate")
     bt3.bind(on_press=on_press_button3)
