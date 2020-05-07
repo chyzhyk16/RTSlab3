@@ -1,7 +1,7 @@
 import random
 
 result = []
-def calc3(a, b, c, d, y):
+def calc3(a, b, c, d, y, m):
     def fit(x):
         global result
         delta = [abs(a * x[i][0] + b * x[i][1] + c * x[i][2] + d * x[i][3] - y) for i in range(len(x))]
@@ -27,7 +27,7 @@ def calc3(a, b, c, d, y):
         return nextp
     def mutation(p):
         for n in p:
-            n[random.randint(0,3)]=random.randint(1,y)
+            n[random.randint(0,3)]=random.randint(1,y)*m
         return p
 
     population = [[random.randint(1, y - 3) for i in range(4)] for i in range(10)]
