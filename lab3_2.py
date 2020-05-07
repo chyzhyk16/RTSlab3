@@ -19,7 +19,7 @@ def calc2(learning_rate, maxtime, maxiter):
                 points[1][1] * w2 > p > points[3][0] * w1 + points[3][1] * w2:
             flag = True
             return 'w1=' + str(w1)[:5] + ' w2=' + str(w2)[:5] + '\ntime=' + str(
-                time.time() - start)
+                time.time() - start)+' num of iterations: '+str(iter)
 
             break
     if flag:
